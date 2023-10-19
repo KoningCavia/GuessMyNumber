@@ -19,6 +19,7 @@ console.log(document.querySelector('.guess').value);
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 document.querySelector('.number').textContent = secretNumber;
+let highScore = 0;
 
 // select element Check (which is a button), add a click listener with a method/function linked to it. (when check button is clicked perform the following method,)
 document.querySelector('.check').addEventListener('click', function () {
@@ -31,6 +32,10 @@ document.querySelector('.check').addEventListener('click', function () {
 
     //When player wins
   } else if (guess === secretNumber) {
+    if (score > highScore) {
+      highScore = score;
+      document.querySelector('.highscore').textContent = score;
+    }
     document.querySelector('.message').textContent = '🎉Correct Number!👌';
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
