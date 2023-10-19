@@ -21,6 +21,9 @@ let score = 20;
 document.querySelector('.number').textContent = secretNumber;
 let highScore = 0;
 
+const displayMessage = function (message) {
+  document.querySelector('.message').textContent = message;
+};
 // select element Check (which is a button), add a click listener with a method/function linked to it. (when check button is clicked perform the following method,)
 document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
@@ -28,7 +31,7 @@ document.querySelector('.check').addEventListener('click', function () {
 
   if (!guess) {
     //When there is no input
-    document.querySelector('.message').textContent = 'No Number😒';
+    displayMessage('No Number😒');
 
     //When player wins
   } else if (guess === secretNumber) {
@@ -36,28 +39,19 @@ document.querySelector('.check').addEventListener('click', function () {
       highScore = score;
       document.querySelector('.highscore').textContent = score;
     }
-    document.querySelector('.message').textContent = '🎉Correct Number!👌';
+    displayMessage('🎉Correct Number!👌');
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
 
-    //When guess is too high
-  } else if (guess > secretNumber) {
-    if (score > 0) {
-      document.querySelector('.message').textContent = 'Too high, try again';
+    // When guess if wrong
+  } else if (guess !== secretNumber) {
+    if (score > 1) {
+      displayMessage(guess > secretNumber ? 'Too high😶‍🌫️' : 'Too low🪱');
       score--;
       document.querySelector('.score').textContent = score;
     } else {
-      document.querySelector('.message').textContent = 'You lost the game 😖';
-    }
-
-    //When guess is too low
-  } else if (guess < secretNumber) {
-    if (score > 0) {
-      document.querySelector('.message').textContent = 'Too low, try again';
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      document.querySelector('.message').textContent = 'You lost the game 😖';
+      displayMessage('You lost the game 😖');
+      document.querySelector('.score').textContent = '0';
     }
   }
 });
@@ -75,8 +69,7 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.guess').value = '';
 
   //Reset message
-  document.querySelector('.message').textContent =
-    'You started a new game, start guessing!';
+  displayMessage('You started a new game, start guessing!');
 
   //Reset CSS
   document.querySelector('body').style.backgroundColor = '#222';
